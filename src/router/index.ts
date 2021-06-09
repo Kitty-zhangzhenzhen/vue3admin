@@ -4,8 +4,31 @@ import Index from '../views/index/index.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Index',
-    component: Index
+    name: 'pageIndex',
+    redirect:'/home',
+    component: () => import(/* webpackChunkName: "pageIndex" */ '../views/pageIndex/index.vue'),
+    children:[
+      {
+        path:'/home',
+        name:'home',
+        component: () => import(/* webpackChunkName: "pageIndex" */ '../views/home/index.vue'),
+      },
+      {
+        path:'/category',
+        name:'category',
+        component: () => import(/* webpackChunkName: "category" */ '../views/category/index.vue'),
+      },
+      {
+        path:'/shopCart',
+        name:'shopCart',
+        component: () => import(/* webpackChunkName: "shopCart" */ '../views/shopCart/index.vue'),
+      },
+      {
+        path:'/user',
+        name:'user',
+        component: () => import(/* webpackChunkName: "user" */ '../views/user/index.vue'),
+      }
+    ]
   },
   {
     path: '/about',

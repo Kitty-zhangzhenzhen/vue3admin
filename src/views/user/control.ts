@@ -12,8 +12,7 @@ import {
   ref
 } from 'vue'
 import {wxChooseImage,initsharemassage} from '@/util/weixin.js';
-import { useStore } from "vuex";
-import { key } from "@/store/index";
+
 import adPicker from '@/components/adPicker/index.vue'
 interface DataProps {
   token: string;
@@ -43,8 +42,14 @@ export default {
           qu:'',
           xian:''
       })
-      const store = useStore(key);
-      const cachedViews = store.state.keepLiveRoute;
+      let toggleRecord=()=>{
+       
+        data.ruleShow=!data.ruleShow
+        
+      }
+      const wxChooseImages=()=>{
+        wxChooseImage()
+      }
       const onconfirm=(val:any)=>{
            switch(val.LevelNum){
              case 1:
@@ -74,7 +79,8 @@ export default {
      
       return {
           ...refData,
-          cachedViews,
+          toggleRecord,
+          wxChooseImages,
           onconfirm
      
       };

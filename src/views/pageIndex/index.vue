@@ -1,12 +1,14 @@
 <template>
   <div class="container">
-
-     <div> <router-link :to="{path:'/upImg'}">upImg</router-link></div>
-  
-     
-     <div> <router-link :to="{path:'/html2Canva'}">html2Canvas</router-link></div>
-    
-     <!-- <ad-picker @onconfirm="onconfirm" /> -->
+    <router-view v-slot="{ Component }">
+      <keep-alive :include="cachedViews">
+        <component :is="Component">
+          <p>缓存页面</p>
+        </component>
+      </keep-alive>
+    </router-view>
+    <Tabbars />
+    <!-- <ad-picker @onconfirm="onconfirm" /> -->
   </div>
 </template>
 <script lang="ts" src="./control.ts"></script>
