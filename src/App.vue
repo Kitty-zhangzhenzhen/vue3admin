@@ -6,11 +6,11 @@
   </keep-alive>
   <div>{{cachedViews}}</div> -->
   <router-view v-slot="{ Component }">
-    <keep-alive :include="cachedViews">
+    <!-- <keep-alive :include="cachedViews"> -->
       <component :is="Component" >
         <p>缓存页面</p>
       </component>
-    </keep-alive>
+    <!-- </keep-alive> -->
    
   </router-view>
 </template>
