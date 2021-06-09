@@ -1,0 +1,259 @@
+$bg_cdn: "https://file03.esurl.cn/Unilever/2021/sm2132/images/"; //cdn地址
+.container {
+    font-size: 16px;
+}
+
+//宽高
+@mixin yh_wh($w, $h) {
+    width: $w;
+    height: $h;
+}
+
+//背景图
+@mixin yh_bg($bg) {
+    background: url($bg_cdn + $bg) no-repeat;
+    background-size: 100% 100%;
+}
+
+//背景图不占拒百分比
+@mixin yh_bg_s($bg, $left, $top, $sizew, $sizeh) {
+    background-image: url($bg_cdn + $bg);
+    background-repeat: no-repeat;
+    background-position: $left $top;
+    background-size: $sizew $sizeh;
+}
+
+//上间距
+@mixin yh_mt($mt) {
+    margin-top: $mt;
+}
+
+//居中
+@mixin yh_center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+//清除margin溢出
+@mixin yh_clearmargin {
+    padding-top: 0.1px;
+}
+
+//文字
+@mixin div_text($color, $fs, $fw, $lh) {
+    color: $color;
+    font-size: $fs;
+    font-weight: $fw;
+    line-height: $lh;
+}
+
+//阴影
+@mixin ts($hshadow, $vshadow, $blur, $color) {
+    text-shadow: $hshadow $vshadow $blur $color, $hshadow (-$vshadow) $blur $color, (-$hshadow) $vshadow $blur $color, (-$hshadow) (-$vshadow) $blur $color;
+}
+
+//字体颜色start
+@mixin active_cor {
+    color: #4097f9;
+}
+
+@mixin main_cor6 {
+    color: #666;
+}
+
+@mixin main_cor9 {
+    color: #999;
+}
+
+@mixin main_cor3 {
+    color: #333;
+}
+
+@mixin main_cor_f {
+    color: #fff;
+}
+
+.yh_active_cor {
+    @include active_cor;
+}
+
+.yh_main_cor6 {
+    @include main_cor6;
+}
+
+.yh_main_cor9 {
+    @include main_cor9;
+}
+
+.main_cor_f {
+    @include main_cor_f;
+}
+
+.yh_main_cor3 {
+    @include main_cor3;
+}
+
+//字体颜色end
+//字体大小start
+.yh_font_11 {
+    font-size: 11px;
+}
+
+.yh_font_12 {
+    font-size: 12px;
+}
+
+.yh_font_13 {
+    font-size: 13px;
+}
+
+.yh_font_14 {
+    font-size: 14px;
+}
+
+.yh_font_15 {
+    font-size: 15px;
+}
+
+.yh_font_16 {
+    font-size: 16px;
+}
+
+.yh_font_18 {
+    font-size: 18px;
+}
+
+.yh_font_20 {
+    font-size: 20px;
+}
+
+.yh_font_22 {
+    font-size: 22px;
+}
+
+.yh_font_24 {
+    font-size: 24px;
+}
+
+//字体大小end
+@mixin yh_text_center {
+    text-align: center;
+}
+
+.yh_text_right {
+    text-align: right;
+}
+
+.yh_text_left {
+    text-align: left;
+}
+
+.yh_text_center {
+    text-align: center;
+}
+
+// flex布局start
+//flex传参
+@mixin yh_flex($display, $direction, $justify, $align) {
+    display: $display;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
+}
+
+//纵向两端对齐
+.yh_flex_y {
+    @include yh_flex(flex, column, space-between, center);
+}
+
+//纵向居中
+.yh_flex_y_center {
+    @include yh_flex(flex, column, center, center);
+}
+
+//横向两端对齐
+.yh_flex_x {
+    @include yh_flex(flex, row, space-between, center);
+}
+
+//横向居中
+.yh_flex_x_center {
+    @include yh_flex(flex, row, center, center);
+}
+
+// 上下左右居中
+.yh_flex_center {
+    @include yh_flex(flex, row, center, center);
+}
+
+//横向对齐  超出滚动
+.yh_flex_x_auto {
+    @include yh_flex(flex, row, space-between, center);
+    overflow-x: auto;
+}
+
+//横向对齐 超出滚动子元素 
+.yh_flex_x_auto .yh_flex_x_auto_item {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+//纵向对齐  超出滚动
+.yh_flex_y_auto {
+    @include yh_flex(flex, column, space-between, center);
+    overflow-x: auto;
+}
+
+.yh_flex_y_auto .yh_flex_y_auto_item {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.yh_flex_col {
+    @include yh_flex(flex, column, center, center);
+}
+
+.yh_flex_row {
+    @include yh_flex(flex, row, center, center);
+}
+
+.yh_flex_col_between {
+    @include yh_flex(flex, column, space-between, center);
+}
+
+.yh_flex_col_around {
+    @include yh_flex(flex, column, space-around, center);
+}
+
+.yh_flex_col_start {
+    @include yh_flex(flex, column, center, flex-start);
+}
+
+.yh_flex_col_end {
+    @include yh_flex(flex, column, center, flex-end);
+}
+
+.yh_flex_row_between {
+    @include yh_flex(flex, row, space-between, center);
+}
+
+.yh_flex_row_around {
+    @include yh_flex(flex, row, space-around, center);
+}
+
+.yh_flex_row_start {
+    @include yh_flex(flex, row, center, flex-start);
+}
+
+.yh_flex_row_end {
+    @include yh_flex(flex, row, center, flex-end);
+}
+
+// flex布局end
+.ml_1 {
+    margin-left: .1rem;
+}
+
+.ml_2 {
+    margin-left: .2rem;
+}

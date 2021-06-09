@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title>
+        <%= htmlWebpackPlugin.options.title %>
+    </title>
+
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+    <script src="https://open.esurl.cn/jsapi/wxconfig/135"></script>
+    <script>
+        document.write('<script src="https://files.esurl.cn/public/js/eruda.min.js"><\/script>');
+        document.write('<script>eruda.init();<\/script>');
+    </script>
+    <script src="./weixin.js"></script>
+</head>
+
+<body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+</body>
+<script>
+    // function touchForbid(domId) {
+    //     var doms = document.getElementById(domId)
+
+    //     doms.addEventListener('touchmove', function(e) {
+    //         e.preventDefault();
+    //     }, false);
+    //     document.addEventListener('touchmove', function(e) {
+    //         e.preventDefault();
+    //     }, false);
+
+    // }
+
+    // touchForbid('app');
+
+    // var isReset = true;
+    // document.body.addEventListener('focusin', function() {
+    //     isReset = false;
+    // });
+    // document.body.addEventListener('focusout', function() {
+    //     isReset = true;
+    //     setTimeout(function() {
+    //         if (isReset) {
+    //             window.scroll(0, 0);
+    //         }
+    //     }, 300);
+    // });
+</script>
+
+</html>
