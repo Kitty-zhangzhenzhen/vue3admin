@@ -2,42 +2,40 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
-    "strict": true,
-    "jsx": "preserve",
-    "importHelpers": true,
     "moduleResolution": "node",
-    "experimentalDecorators": true,
     "skipLibCheck": true,
-    "esModuleInterop": true,
+    "strict": true,
     "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
+    "jsx": "preserve",
     "baseUrl": ".",
+    "importHelpers": true,
+    "isolatedModules": true,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ],
     "types": [
-      "webpack-env"
+      "vite/client",
+      "jest"
     ],
     "paths": {
       "@/*": [
         "src/*"
       ]
     },
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
   },
-  "defaultSeverity": "none",
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
+    "src/**/*.ts", 
+    "src/**/*.d.ts", 
+    "src/**/*.tsx", 
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx", 
-    "src/util/weixin.js",
-    "src/store/*.ts"
+    "tests/**/*.tsx"    
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules", "dist", "**/*.js"]
 }
