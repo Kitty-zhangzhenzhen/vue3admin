@@ -1,7 +1,4 @@
-/**
- * 自定义 request 网络请求工具,基于axios
- * @author LiQingSong
- */
+
 import axios, { AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { notification } from "ant-design-vue";
 import router from '@/config/routes';
