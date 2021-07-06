@@ -61,9 +61,12 @@ export default {
     const refData = toRefs(data);
     const { proxy } = getCurrentInstance() as ComponentInternalInstance;
     const tabClick = (item: any) => {
+
       (proxy as any).$router.replace({
         path: item.router,
       });
+      console.log(item)
+
       data.activeTab = item.router;
     };
     onMounted(() => {

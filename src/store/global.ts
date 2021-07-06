@@ -10,6 +10,8 @@ export interface StateType {
   topNavEnable: boolean;
   // 头部固定开启
   headFixed: boolean;
+  //缓存路由
+  cachedViews:string[];
 }
 
 export interface ModuleType extends StoreModuleType<StateType> {
@@ -18,6 +20,7 @@ export interface ModuleType extends StoreModuleType<StateType> {
     changeLayoutCollapsed: Mutation<StateType>;
     setTopNavEnable: Mutation<StateType>;
     setHeadFixed: Mutation<StateType>;
+    setCachedViews: Mutation<StateType>;
   };
   actions: {
   };
@@ -27,6 +30,7 @@ const initState: StateType = {
   collapsed: false,
   topNavEnable: settings.topNavEnable,
   headFixed: settings.headFixed,
+  cachedViews:['home','category']
 };
 
 const StoreModel: ModuleType = {
@@ -44,6 +48,9 @@ const StoreModel: ModuleType = {
     },
     setHeadFixed(state, payload) {
       state.headFixed = payload;
+    },
+    setCachedViews(state,payload){
+      state.cachedViews = payload;
     }
   },
   actions: {}

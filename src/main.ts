@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-
+import '@/assets/js/rem.js'
 // 全局样式
 import '@/assets/css/global.less';
 

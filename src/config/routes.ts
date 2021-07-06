@@ -92,6 +92,15 @@ const router = createRouter({
             },
           }
         ]
+      },
+      {
+        path:'/order',
+        name:'order',
+        component: () => import('@/views/order/index.vue'),
+            meta:{
+              title:'我的订单',
+              cachedViews:true
+            },
       }
     ],
   });

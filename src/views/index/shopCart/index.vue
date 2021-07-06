@@ -1,18 +1,19 @@
 <template>
   <div class="container">
-    <div class="cart-container_noCart" v-if="shoppingCartList.length==0">
+   
+    <div class="cart-container_noCart" v-if="!hasCart" >
       <img src="http://cdn-opimage.qiumeiapp.com/xcx/xcxResources/cart/no-product.png" />
       <div style="margin-top: 28npx; font-size: 30npx; color: #666666"
-        >购物车空空如也,来挑几件好货吧</div
+        >购物车空空如也,来挑几件好货吧 {{hasCart}}</div
       >
-      <router-link path="/home">
+      <router-link to="/home">
         <div class="cart-container_noCart_goHome">去逛逛</div>
       </router-link>
     </div>
 
-    <div class="cart-container_hasCart" wx:if="{{hasCart}}">
+    <div class="cart-container_hasCart" v-else>
       <div class="allProduct_body">
-        <div v-for="item in shoppingCartList" :key="item.productId">
+        <div v-for="item in shopArray" :key="item.productId">
           <!--常规产品 -->
           <div class="cart-pro-item" v-if="item.channelType != 3" style="padding-top: 15npx">
             <div class="select-box">
@@ -25,10 +26,10 @@
                 @click="changeSelect"
               />
             </div>
-            <div class="pro-img-box" style="margin-left: 20npx">
+            <div class="pro-img-box" style="margin-left: 10px">
               <img :src="item.coverImage" />
             </div>
-            <div class="pro-info" style="width: 70%">
+            <div class="pro-info" style="width: 69%">
               <div class="pro-name-box">
                 <div class="pro-name">
                   {{ item.productName }}
@@ -64,7 +65,7 @@
             </div>
           </div>
         </div>
-        <div v-if="recommendProList.length == 0" style="height: 46px"></div>
+        <!-- <div v-if="shopArray.length == 0" style="height: 46px"></div> -->
       </div>
     </div>
   </div>
@@ -75,6 +76,7 @@ import { useStore } from 'vuex';
 import { getProduct } from './service';
 interface DataProps {
   shopArray: Object[];
+  hasCart:Boolean;
 }
 
 export default defineComponent({
@@ -82,10 +84,18 @@ export default defineComponent({
   setup() {
     const data: DataProps = reactive({
       shopArray: [],
+      hasCart:true
     });
     const getCartList = async () => {
-      let res = await getProduct();
-      data.shopArray = res.data.productList;
+      let res:any = await getProduct();
+      if(!res.data.shopCartList.length){
+        data.hasCart=false
+        return
+      }
+      data.hasCart=true
+      console.log(data.hasCart)
+      data.shopArray = res.data.shopCartList;
+     
     };
     const refData = toRefs(data);
     onMounted(() => {
@@ -93,39 +103,40 @@ export default defineComponent({
     });
 
     return {
-      refData,
+      ...refData,
     };
   },
 });
 </script>
 <style lang="scss" scoped>
-@import "@/assets/common.scss";
+@import "@/assets/css/common.scss";
+
 .cart-container {
     position: absolute;
     top: 0;
-    bottom: npx(0);
+    bottom: 0;
     z-index: 2;
     overflow-y: auto;
     width: 100%;
     .cart-container_noCart{
         text-align: center;
         width: 100%;
-        image{
-            width: npx(146);
-            height: npx(146);
-            margin-top: npx(80);
+        img{
+            width: 146px;
+            height: 146px;
+            margin-top: 80px;
         }
         .cart-container_noCart_goHome{
-            width: npx(260);
-            height: npx(60);
-            line-height: npx(60);
-            font-size: npx(28);
+            width: 260px;
+            height: 60px;
+            line-height: 60px;
+            font-size: 28px;
             color: #fff;
             background-color: #d6000f;
             margin: 0 auto;
-            border-radius: npx(6);
-            margin-top: npx(40);
-            margin-bottom: npx(80);
+            border-radius: 6px;
+            margin-top: 40px;
+            margin-bottom: 80px;
         }
     }
 }
@@ -141,53 +152,53 @@ export default defineComponent({
             background-color: #fff;
             width: 46%;
             display: inline-block;
-            margin-bottom: npx(10);
-            margin-left: npx(20);
+            margin-bottom: 10px;
+            margin-left: 20px;
             overflow: hidden;
             .pro-img{
-                image{
+                img{
                     width: 100%;
-                    height: npx(346);
+                    height: 346px;
                 }
             }
             .pro-desc{
-                padding-left: npx(20);
-                padding-right: npx(20);
+                padding-left: 20px;
+                padding-right: 20px;
                 .title{
-                    font-size: npx(28);
+                    font-size: 28px;
                     color: #333;
                     @include multi-line-text(2);
-                    margin-bottom: npx(10);
+                    margin-bottom: 10px;
                 }
                 .subTitle{
-                    font-size: npx(28);
+                    font-size: 28px;
                     color: #666;
                     @include multi-line-text(1);
-                    margin-bottom: npx(10);
+                    margin-bottom: 10px;
                 }
                 .exchangeWeibi{
-                    font-size: npx(18);
-                    margin-bottom: npx(10);
+                    font-size: 18px;
+                    margin-bottom: 10px;
                     // background-color: rgb(247,231,218);
                     background-image: url(http://cdn-opimage.qiumeiapp.com/vipXcx/xcxIcon/vip-icon.png);
                     background-repeat: no-repeat;
                     background-size: 100%;
-                    border-radius: npx(20);
-                    padding-left: npx(44);
-                    height: npx(30);
-                    line-height: npx(30);
+                    border-radius: 20px;
+                    padding-left: 44px;
+                    height: 30px;
+                    line-height: 30px;
                 }
                 .price{
-                    margin-bottom: npx(10);
+                    margin-bottom: 10px;
                     .currentPrice{
-                        font-size: npx(28);
+                        font-size: 28px;
                         color: #d6000f;
                     }
                     .originalPrice{
-                        font-size: npx(22);
+                        font-size: 22px;
                         color: #666;
                         text-decoration: line-through; 
-                        margin-left: npx(20);
+                        margin-left: 20px;
                     }
                 }
             }
@@ -196,9 +207,9 @@ export default defineComponent({
 }
 
 .cart-bottom_calculate {
-    height: npx(92);
-    line-height: npx(90);
-    border-top: npx(1) solid #e8e8e8;
+    height: 92px;
+    line-height: 90px;
+    border-top: 1px solid #e8e8e8;
     position: fixed;
     left: 0;
     width: 100%;
@@ -207,34 +218,34 @@ export default defineComponent({
     background: #ffffff;
     &_select {
       float: left;
-      margin-left: npx(38);
+      margin-left: 38px;
       color: #565656;
-      font-size: npx(30);
+      font-size: 30px;
   
-      image {
+      img {
         display: inline-block;
-        width: npx(35);
-        height: npx(35) !important;
+        width: 35px;
+        height: 35px !important;
         vertical-align: middle;
       }
     }
   
     &_goFillOrder {
       float: right;
-      width: npx(266);
-      height: npx(93);
-      line-height: npx(93);
+      width: 266px;
+      height: 93px;
+      line-height: 93px;
       background: $themeColor;
       text-align: center;
       color: #ffffff;
-      font-size: npx(30);
+      font-size: 30px;
     }
   
     &_totalAmount {
       float: right;
-      margin-right: npx(20);
+      margin-right: 20px;
       color: #565656;
-      font-size: npx(30);
+      font-size: 30px;
     }
   }
   
@@ -243,104 +254,105 @@ export default defineComponent({
   }
   
   .allProduct_body {
+    width: 100vw;
     background: #ffffff;
   
     &_single {
-      //height: npx(240);
-      padding-top: npx(30);
-      padding-bottom: npx(30);
-      border-bottom: npx(1) solid #e8e8e8;
+      //height: 240);
+      padding-top: 30px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #e8e8e8;
   
       &_isSelect {
         float: left;
-        line-height: npx(200);
-        margin-left: npx(15);
+        line-height: 200px;
+        margin-left: 15px;
   
-        image {
-          width: npx(36);
-          height: npx(36) !important;
+        img {
+          width: 36px;
+          height: 36px;
         }
       }
   
       &_headImg {
         float: left;
   
-        image {
-          width: npx(200);
-          height: npx(200) !important;
+        img {
+          // width: 200px;
+          // height: 200px;
         }
       }
   
       &_info {
         float: left;
         width: 70%;
-        margin-left: npx(15);
+        margin-left: 15px;
   
         &_name {
-          margin-top: npx(20);
+          margin-top: 20px;
           color: #333333;
-          font-size: npx(24);
-          // height: npx(150);
+          font-size: 24px;
+          // height: 150);
           overflow: hidden;
         }
   
         &_price {
-          margin-top: npx(10);
+          margin-top: 10px;
   
           &_num {
             color: $themeColor;
-            font-size: npx(30);
+            font-size: 30px;
             float: left;
           }
   
           &_edit {
             float: right;
-            width: npx(136);
-            border: npx(1) solid #e8e8e8;
-            border-radius: npx(16);
+            width: 136px;
+            border: 1px solid #e8e8e8;
+            border-radius: 16px;
   
             &_jian {
-              height: npx(44);
-              line-height: npx(44);
+              height: 44px;
+              line-height: 44px;
               text-align: center;
               float: left;
               vertical-align: middle;
-              width: npx(38);
+              width: 38px;
               color: #999999;
             }
   
             &_num {
-              height: npx(44);
-              line-height: npx(44);
+              height: 44px;
+              line-height: 44px;
               text-align: center;
               float: left;
               vertical-align: middle;
-              width: npx(59);
+              width: 59px;
               color: #555555;
-              border-left: npx(1) solid #e8e8e8;
-              border-right: npx(1) solid #e8e8e8;
-              font-size: npx(30);
+              border-left: 1px solid #e8e8e8;
+              border-right: 1px solid #e8e8e8;
+              font-size: 30px;
             }
   
             &_jia {
-              height: npx(44);
-              line-height: npx(44);
+              height: 44px;
+              line-height: 44px;
               text-align: center;
               float: left;
               vertical-align: middle;
-              width: npx(37);
+              width: 37px;
               color: #999999;
             }
           }
   
           &_del {
             float: right;
-            margin-right: npx(33);
+            margin-right: 33px;
             vertical-align: middle;
   
-            image {
-              width: npx(30);
-              height: npx(30) !important;
+            img {
+              
+              width: 20px;
               vertical-align: middle;
             }
           }
@@ -348,9 +360,8 @@ export default defineComponent({
           &_icon {
             float: right;
   
-            image {
-              width: npx(30);
-              height: npx(30) !important;
+            img {
+              width: 20px;
             }
           }
         }
@@ -360,29 +371,29 @@ export default defineComponent({
   
   .giftProduct-container {
     &_single {
-      //height: npx(90);
-      //line-height: npx(90);
-      //border-bottom: npx(1) solid #e8e8e8;
-      padding: npx(33) 0 npx(41) 0;
+      //height: 90);
+      //line-height: 90);
+      //border-bottom: 1) solid #e8e8e8;
+      padding: 33px 0 41px 0;
   
       &_icon {
         display: inline-block;
-        width: npx(70);
-        height: npx(35);
-        line-height: npx(35);
+        width: 70px;
+        height: 35px;
+        line-height: 35px;
         color: $themeColor;
         text-align: center;
-        margin-left: npx(30);
-        font-size: npx(24);
-        border: npx(1) solid #d6000f;
-        border-radius: npx(10);
+        margin-left: 30px;
+        font-size: 24px;
+        border: 1px solid #d6000f;
+        border-radius: 10px;
         vertical-align: top;
       }
   
       &_info {
         display: inline-block;
-        margin-left: npx(30);
-        font-size: npx(26);
+        margin-left: 30px;
+        font-size: 26px;
   
         &_productName {
           color: #333333;
@@ -390,19 +401,18 @@ export default defineComponent({
   
         &_time {
           color: #999999;
-          font-size: npx(24);
-          margin-top: npx(14);
+          font-size: 24px;
+          margin-top: 14px;
         }
       }
   
       &_select {
         float: right;
-        margin-right: npx(29);
+        margin-right: 29px;
         vertical-align: middle;
   
-        image {
-          width: npx(36);
-          height: npx(36) !important;
+        img {
+          width: 36px;
           vertical-align: middle;
         }
       }
@@ -432,25 +442,24 @@ export default defineComponent({
     // position: fixed;
     // top: 0;
     // left: 0;
-    height: npx(90);
+    height: 90px;
     width: 100%;
     background: #fffdef;
     display: flex;
     align-items: center;
   
-    image {
-      width: npx(30);
-      height: npx(30);
-      margin-left: npx(30);
+    img {
+      width: 30px;
+      margin-left: 30px;
     }
     .right-icon{
-      width: npx(24);
-      height: npx(24);
-      margin-left: npx(0);
+      width: 24px;
+      height: 24px;
+      margin-left: 0;
     }
   
     > view:nth-of-type(1) {
-      margin-left: npx(25);
+      margin-left: 25px;
       color: #d4010f;
       font-size: 15px;
     }
@@ -459,7 +468,7 @@ export default defineComponent({
       color: #353633;
       font-size: 15px;
       position: absolute;
-      right: npx(30);
+      right: 30px;
     }
   }
   
@@ -477,33 +486,33 @@ export default defineComponent({
   
   .gift-list {
     position: fixed;
-    bottom: npx(92);
+    bottom: 92px;
     left: 0;
-    height: npx(670);
+    height: 670px;
     width: 100%;
     background: #fff;
   
     .list {
-      height: npx(580);
+      height: 580px;
       width: 100%;
       overflow-y: scroll;
-      margin-top: npx(93);
+      margin-top: 93px;
   
       > view {
-        height: npx(150);
+        height: 150px;
         display: flex;
-        padding: npx(20) 0;
+        padding: 20px 0;
         border-bottom: 1px solid #dbdbdb;
   
         > view:nth-of-type(1) {
-          margin: 0 npx(30);
+          margin: 0 30px;
           display: flex;
           align-items: center;
   
-          image {
+          img {
             display: block;
-            width: npx(28);
-            height: npx(28);
+            width: 28px;
+            height: 28px;
           }
         }
   
@@ -511,15 +520,15 @@ export default defineComponent({
           display: flex;
           align-items: center;
   
-          image {
+          img {
             display: block;
-            width: npx(110);
-            height: npx(110);
+            width: 110px;
+            height: 110px;
           }
         }
   
         > view:nth-of-type(3) {
-          margin-left: npx(30);
+          margin-left: 30px;
           font-size: 14px;
           display: flex;
           flex-direction: column;
@@ -535,100 +544,103 @@ export default defineComponent({
   
   .cart-pro-item {
     @include flex(row, initial, center);
-    padding: npx(15) npx(30);
+    padding: 8px 15px;
     //min-height: 240npx;
     height: auto;
-    //border-bottom: npx(1) solid #e8e8e8;
+    //border-bottom: 1) solid #e8e8e8;
   
     .select-box {
-      image {
-        width: npx(36);
-        height: npx(36) !important;
+      img {
+        width: 20px;
+        height: 20px;
       }
     }
   
     .pro-img-box {
-      margin-left: npx(10);
+      margin-left: 10px;
   
-      image {
-        width: npx(200);
-        height: npx(200) !important;
+      img {
+        width: 100px;
+        height: 100px;
         vertical-align: middle;
       }
     }
   
     .pro-info {
-      min-height: npx(150);
-      margin-left: npx(15);
+      min-height: 100px;
+      margin-left: 15px;
+      flex-shrink: 1;
       @include flex(column, space-between, initial);
   
       .pro-name-box {
         .pro-name{
           color: #333333;
-          font-size: npx(24);
-          //height: npx(80);
+          font-size: 14px;
+          //height: 80);
           @include multi-line-text(2);
         }
         .pro-subname{
           color:#999999;
-          font-size: npx(24);
+          font-size: 24px;
           @include multi-line-text(1);
         }
       }
   
       .price-info {
+        width: 100%;
         @include flex(row, space-between, initial);
   
         .price-num {
           color: #d6000f;
-          font-size: npx(28);
+          font-size: 16px;
         }
   
         .edit-box {
-          width: npx(220);
+          // width: 220px;
           @include flex(row, space-between, center);
   
           .del {
-            image {
-              width: npx(36);
-              height: npx(36) !important;
+            margin-left: 2px;
+            img {
+              width: 20px;
+              height: 20px !important;
               vertical-align: middle;
             }
           }
   
           .price-edit {
-            width: npx(155);
-            border: npx(1) solid #e8e8e8;
-            border-radius: npx(16);
-  
+            width: 80px;
+            border: 1px solid #e8e8e8;
+            border-radius: 16px;
+            @include flex(row, space-between, center);
             view {
               display: inline-block;
             }
   
             .jian {
-              height: npx(44);
-              line-height: npx(44);
+              height: 25px;
+              line-height: 25px;
               text-align: center;
-              width: npx(50);
+              width: 30px;
               color: #999999;
             }
   
             .num {
-              height: npx(44);
-              line-height: npx(44);
+              height: 25px;
+              line-height: 25px;
               text-align: center;
-              width: npx(50);
+              width: 30px;
               color: #555555;
-              border-left: npx(1) solid #e8e8e8;
-              border-right: npx(1) solid #e8e8e8;
-              font-size: npx(30);
+              border-left: 1px solid #e8e8e8;
+              border-right: 1px solid #e8e8e8;
+              font-size: 16px;
             }
   
             .jia {
-              height: npx(44);
-              line-height: npx(44);
+              height: 25px;
+              line-height: 25px;
               text-align: center;
-              width: npx(50);
+              width: 30px;
               color: #999999;
             }
           }
@@ -642,21 +654,21 @@ export default defineComponent({
     display: flex;
     align-items: center;
     font-size: 13px;
-    margin-top: npx(20);
+    margin-top: 20px;
   
     &-1 {
       background: url('http://cdn-opimage.qiumeiapp.com/xcx/xcxResources/common/xg_bg.png');
-      width: npx(106);
-      height: npx(32);
+      width: 106px;
+      height: 32px;
       background-size: 100% 100%;
       color: #fff;
       text-align: center;
-      line-height: npx(32);
+      line-height: 32px;
       font-size: 12px;
     }
   
     &-2 {
-      margin-left: npx(10);
+      margin-left: 10px;
   
       > text {
         color: #d8000e;

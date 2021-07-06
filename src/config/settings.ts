@@ -38,7 +38,13 @@ export interface SettingsType {
      */
     iconfontUrl: string[];
 }
-  
+// @font-face {
+//     font-family: 'iconfont';  /* Project id 2651199 */
+//     src: url('//at.alicdn.com/t/font_2651199_fq4705nnpha.woff2?t=1625456624383') format('woff2'),
+//          url('//at.alicdn.com/t/font_2651199_fq4705nnpha.woff?t=1625456624383') format('woff'),
+//          url('//at.alicdn.com/t/font_2651199_fq4705nnpha.ttf?t=1625456624383') format('truetype');
+//   }
+
 const settings: SettingsType = {
     siteTitle: 'ADMIN-ANTD-VUE',
     topNavEnable: true,
@@ -49,7 +55,7 @@ const settings: SettingsType = {
         '/user/login', // 用户登录
         '/user/info', // 获取用户信息
     ],
-    iconfontUrl: [],
+    iconfontUrl: ['//at.alicdn.com/t/font_2651199_vzxktcvkx8.js'],
 };
 
 export default settings;
